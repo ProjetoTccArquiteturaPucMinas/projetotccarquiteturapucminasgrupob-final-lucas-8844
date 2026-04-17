@@ -1,17 +1,74 @@
-# Atividade de implementação da feature
+# Atividade de Implementação da Feature
 
-## Contexto
+## 1. Contexto
 Este projeto faz parte de um experimento acadêmico para avaliar esforço de compreensão e esforço de modificação em diferentes arquiteturas de software.
 
-Você recebeu a versão do sistema implementada com **arquitetura em camadas**.
+Você recebeu a versão do sistema implementada com arquitetura em camadas.
 
-## Sua tarefa
-1. Identificar a arquitetura usada no projeto.
-2. Justificar com base na estrutura do código.
-3. Identificar a classe que deve ser alterada
-4. Implementar a feature de cálculo de descontos no carrinho.
-5. Realizar testes de ponta a ponta para validar a implementação.
-6. Executar os testes até que todos passem.
+---
+
+## 2. Identificação da Arquitetura
+Arquitetura em camadas.
+
+---
+
+## 3. Justificativa da Arquitetura
+A estrutura do projeto segue claramente a arquitetura em camadas, organizada da seguinte forma:
+
+- Camada de Apresentação (Presentation): localizada em `presentation/controller/`, responsável pela exposição de endpoints REST (ex.: `CarrinhoController`, `ViewController`).
+
+- Camada de Aplicação (Application): localizada em `application/usecase/` e `application/dto/`, contendo os casos de uso (ex.: `CalcularCarrinhoUseCase`) e DTOs para transferência de dados.
+
+- Camada de Domínio (Domain): localizada em `domain/model/` e `domain/repository/`, responsável pelas entidades de negócio (ex.: `Produto`, `ResumoCarrinho`) e interfaces de repositório.
+
+- Camada de Infraestrutura (Infrastructure): localizada em `infrastructure/repository/`, contendo as implementações dos repositórios (ex.: `InMemoryProdutoRepositorio`).
+
+Essa separação garante baixo acoplamento, alta coesão e facilita a manutenção e testes.
+
+---
+
+## 4. Classe Alterada
+A classe alterada foi `CalcularCarrinhoUseCase`, localizada em `application/usecase/`.
+
+Ela é responsável pela lógica de cálculo do carrinho, incluindo subtotal, descontos e total.
+
+---
+
+## 5. Implementação da Feature
+A implementação foi realizada no método `executar` da classe `CalcularCarrinhoUseCase`.
+
+Regras implementadas:
+
+- Cálculo do subtotal: soma de (preço × quantidade) de cada item.
+
+- Desconto por quantidade:
+  - 1 item → 0%
+  - 2 itens → 5%
+  - 3 itens → 7%
+  - 4 ou mais → 10%
+
+- Desconto por categoria (por item):
+  - CAPINHA → 3%
+  - CARREGADOR → 5%
+  - FONE → 3%
+  - PELÍCULA → 2%
+  - SUPORTE → 2%
+
+- Limite máximo de desconto: 25%
+
+- Cálculo final:
+  - valor total de desconto
+  - valor final do carrinho
+
+---
+
+## 6. Testes de Validação
+Os testes unitários foram executados com sucesso.
+
+- Total de testes: 8
+- Testes do `CalcularCarrinhoUseCase`: 6
+
+Os testes cobrem os cenários definidos em `CENARIOTESTE.md`, garantindo a validação da lógica implementada.
 
 ## Regras que precisam ser implementadas
 
